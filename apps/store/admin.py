@@ -11,8 +11,8 @@ class CategoryModelAdmin(admin.ModelAdmin):
 
 @admin.register(SupplierModel)
 class SupplierModelAdmin(admin.ModelAdmin):
-    list_display = ('name', 'contact_email', 'phone_number')
-    search_fields = ('name', 'contact_email', 'phone_number')
+    list_display = ('name', 'email', 'phone_number')
+    search_fields = ('name', 'email', 'phone_number')
     ordering = ('name',)
 
 

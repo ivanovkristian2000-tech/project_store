@@ -1,10 +1,11 @@
 from decimal import Decimal
 from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MinValueValidator
 from apps.store.models import CategoryModel, SupplierModel
+from apps.base.models import UUIDModel
 
 
-class ProductModel(models.Model):
+class ProductModel(UUIDModel):
     name = models.CharField(max_length=100)
     category = models.ForeignKey(CategoryModel, on_delete=models.PROTECT, related_name='products')
     supplier = models.ForeignKey(SupplierModel, on_delete=models.PROTECT, related_name='products')
@@ -14,14 +15,16 @@ class ProductModel(models.Model):
     available = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.name
+        return f'Product: {self.name}'
 
     class Meta:
         db_table = 'store_products'
+        verbose_name = 'Product'
+        verbose_name_plural = 'Products'
         ordering = ['category', 'quantity']
 
 
-class ProductDetailModel(models.Model):
+class ProductDetailModel(UUIDModel):
     product = models.OneToOneField(ProductModel, on_delete=models.CASCADE, related_name='details')
     description = models.TextField(null=True, blank=True)
     manufacturing_date = models.DateField(null=True, blank=True)
