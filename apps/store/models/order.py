@@ -12,11 +12,14 @@ class OrderModel(UUIDModel):
         return f'Order {self.id} by {self.customer}'
 
     class Meta:
+        db_table = 'store_orders'
+        verbose_name = 'Order'
+        verbose_name_plural = 'Orders'
         ordering = ['-order_date']
         get_latest_by = 'order_date'
 
 
-class OrderItemModel(models.Model):
+class OrderItemModel(UUIDModel):
     order = models.ForeignKey(OrderModel, on_delete=models.CASCADE, related_name='order_items')
     product = models.ForeignKey(ProductModel, on_delete=models.PROTECT, related_name='order_items')
     quantity = models.PositiveIntegerField(default=0)
